@@ -1,16 +1,17 @@
-/* 
-  Diego Galvis Tapasco
-  CPRG-303-B
-*/
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from "react";
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 export default function HomeScreen() {
-  return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+  const showAlert = () => {
+    Alert.alert("Alert Button pressed");
+  };
 
-      {/* I use the top bar to display the back button and the title of the screen */}
+  return (
+    
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+      {/* Top bar with back arrow and title */}
       <View style={styles.topBar}>
         <Text style={styles.backIcon}>‹</Text>
 
@@ -19,13 +20,16 @@ export default function HomeScreen() {
           <Text style={styles.headerTitle}>Posts</Text>
         </View>
 
-        {/* This spacer helps keep the title centered on the screen */}
+        {/* Spacer to keep title centered */}
         <View style={{ width: 24 }} />
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-
-        {/* The post header shows the user information for the post */}
+      {/* Main scroll content */}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Post header */}
         <View style={styles.postHeader}>
           <View style={styles.postLeft}>
             <View style={styles.avatar} />
@@ -39,10 +43,10 @@ export default function HomeScreen() {
           <Text style={styles.postMenu}>•••</Text>
         </View>
 
-        {/* This is a placeholder used to represent the post image */}
+        {/* Image placeholder */}
         <View style={styles.imagePlaceholder} />
 
-        {/* This row contains the actions for the post (like, comment, and share) */}
+        {/* Actions row */}
         <View style={styles.actionsRow}>
           <View style={styles.actionsLeft}>
             <Text style={styles.actionIcon}>♡</Text>
@@ -50,11 +54,10 @@ export default function HomeScreen() {
             <Text style={styles.actionIcon}>➢</Text>
           </View>
 
-          {/* The bookmark icon is placed on the right side */}
           <Text style={styles.bookmarkIcon}>🔖</Text>
         </View>
 
-        {/* This section shows who liked the post */}
+        {/* Likes */}
         <View style={styles.likesRow}>
           <View style={styles.likesAvatars}>
             <View style={styles.likeAvatar} />
@@ -63,16 +66,17 @@ export default function HomeScreen() {
           </View>
 
           <Text style={styles.likesText}>
-            Liked by <Text style={styles.bold}>paisley.print.48</Text> and <Text style={styles.bold}>7 others</Text>
+            Liked by <Text style={styles.bold}>paisley.print.48</Text> and{" "}
+            <Text style={styles.bold}>7 others</Text>
           </Text>
         </View>
 
-        {/* This is the caption written by the user */}
+        {/* Caption */}
         <Text style={styles.caption}>
           <Text style={styles.bold}>frenchie_fry39</Text> Fresh shot on a sunny day! ✨
         </Text>
 
-        {/* This shows a preview of the comments */}
+        {/* Comments */}
         <Text style={styles.comments}>View all 12 comments</Text>
 
         <Text style={styles.comment}>
@@ -80,13 +84,13 @@ export default function HomeScreen() {
         </Text>
 
         <Text style={styles.comment}>
-          <Text style={styles.bold}>pia.in.a.pod</Text> Gorg. Love it! ❤️
+          <Text style={styles.bold}>pia.in.a.pod</Text> Love it! ❤️
         </Text>
 
         <Text style={styles.time}>1 day ago</Text>
       </ScrollView>
 
-      {/* Bottom navigation bar similar to Instagram */}
+      {/* Bottom navigation */}
       <View style={styles.bottomNav}>
         <Text style={styles.navIcon}>⌂</Text>
         <Text style={styles.navIcon}>⌕</Text>
@@ -94,67 +98,73 @@ export default function HomeScreen() {
         <Text style={styles.navIcon}>▶</Text>
         <Text style={styles.navIcon}>●</Text>
       </View>
+      
+      {/* Alert Button */}
+      <Pressable style={styles.alertBtn} onPress={showAlert}>
+        <Text style={styles.alertBtnText}>Alert</Text>
+      </Pressable>
+
     </SafeAreaView>
   );
 }
-/* Here I start defining the styles for the screen */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 
   scrollContent: {
-    paddingBottom: 80,
+    paddingBottom: 20,
   },
 
   topBar: {
     height: 56,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e5e5',
+    borderBottomColor: "#e5e5e5",
   },
   backIcon: {
     fontSize: 28,
   },
   titleWrapper: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   headerUsername: {
     fontSize: 12,
-    color: '#777',
+    color: "#777",
   },
   headerTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   postHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 12,
   },
   postLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   avatar: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
     marginRight: 10,
   },
   postUsername: {
-    fontWeight: '600',
+    fontWeight: "600",
   },
   location: {
     fontSize: 12,
-    color: '#666',
+    color: "#666",
   },
   postMenu: {
     fontSize: 20,
@@ -162,21 +172,20 @@ const styles = StyleSheet.create({
   },
 
   imagePlaceholder: {
-    width: '100%',
+    width: "100%",
     height: 380,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "#e0e0e0",
   },
 
   actionsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
   actionsLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
   },
   actionIcon: {
     fontSize: 22,
@@ -187,26 +196,26 @@ const styles = StyleSheet.create({
   },
 
   likesRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 12,
     marginBottom: 4,
   },
   likesAvatars: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginRight: 8,
   },
   likeAvatar: {
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
   },
   likeAvatarOverlap: {
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#bbb',
+    backgroundColor: "#bbb",
     marginLeft: -6,
   },
   likesText: {
@@ -221,7 +230,7 @@ const styles = StyleSheet.create({
   comments: {
     paddingHorizontal: 12,
     marginTop: 4,
-    color: '#777',
+    color: "#777",
     fontSize: 13,
   },
   comment: {
@@ -233,23 +242,40 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginTop: 6,
     fontSize: 11,
-    color: '#999',
-    marginBottom: 20,
+    color: "#999",
+    marginBottom: 10,
   },
   bold: {
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   bottomNav: {
     height: 58,
     borderTopWidth: 1,
-    borderTopColor: '#e5e5e5',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: '#fff',
+    borderTopColor: "#e5e5e5",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: "#fff",
   },
   navIcon: {
     fontSize: 22,
   },
+  
+ 
+  alertBtn: {
+    height: 50,
+    marginHorizontal: 12,
+    marginBottom: 6,
+    borderRadius: 10,
+    backgroundColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  alertBtnText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+
 });
