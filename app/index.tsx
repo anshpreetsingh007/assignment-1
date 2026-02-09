@@ -1,15 +1,18 @@
 import React from "react";
-import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-
 export default function HomeScreen() {
-  const showAlert = () => {
-    Alert.alert("Alert Button pressed");
-  };
-
   return (
-    
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       {/* Top bar with back arrow and title */}
       <View style={styles.topBar}>
@@ -32,7 +35,11 @@ export default function HomeScreen() {
         {/* Post header */}
         <View style={styles.postHeader}>
           <View style={styles.postLeft}>
-            <View style={styles.avatar} />
+            {/* Profile image */}
+            <Image
+              source={require("../assets/images/profile.png")}
+              style={styles.avatar}
+            />
 
             <View>
               <Text style={styles.postUsername}>ootd_everyday</Text>
@@ -43,8 +50,11 @@ export default function HomeScreen() {
           <Text style={styles.postMenu}>•••</Text>
         </View>
 
-        {/* Image placeholder */}
-        <View style={styles.imagePlaceholder} />
+        {/* Post image */}
+        <Image
+          source={require("../assets/images/webdeb.png")}
+          style={styles.postImage}
+        />
 
         {/* Actions row */}
         <View style={styles.actionsRow}>
@@ -60,9 +70,18 @@ export default function HomeScreen() {
         {/* Likes */}
         <View style={styles.likesRow}>
           <View style={styles.likesAvatars}>
-            <View style={styles.likeAvatar} />
-            <View style={styles.likeAvatarOverlap} />
-            <View style={styles.likeAvatarOverlap} />
+            <Image
+              source={require("../assets/images/like1.jpg")}
+              style={styles.likeAvatar}
+            />
+            <Image
+              source={require("../assets/images/like2.jpg")}
+              style={styles.likeAvatarOverlap}
+            />
+            <Image
+              source={require("../assets/images/like3.jpg")}
+              style={styles.likeAvatarOverlap}
+            />
           </View>
 
           <Text style={styles.likesText}>
@@ -73,7 +92,8 @@ export default function HomeScreen() {
 
         {/* Caption */}
         <Text style={styles.caption}>
-          <Text style={styles.bold}>frenchie_fry39</Text> Fresh shot on a sunny day! ✨
+          <Text style={styles.bold}>frenchie_fry39</Text> Fresh shot on a sunny
+          day! ✨
         </Text>
 
         {/* Comments */}
@@ -98,16 +118,18 @@ export default function HomeScreen() {
         <Text style={styles.navIcon}>▶</Text>
         <Text style={styles.navIcon}>●</Text>
       </View>
-      
-  
-   {/* Alert Button */}
-      <Pressable style={styles.alertBtn} onPress={() => Platform.OS === "web"
-      ? window.alert("Alert Button pressed")
-      : Alert.alert("Alert", "Alert Button pressed")
-  }>
+
+      {/* Alert Button */}
+      <Pressable
+        style={styles.alertBtn}
+        onPress={() =>
+          Platform.OS === "web"
+            ? window.alert("Alert Button pressed")
+            : Alert.alert("Alert", "Alert Button pressed")
+        }
+      >
         <Text style={styles.alertBtnText}>Alert</Text>
       </Pressable>
-
     </SafeAreaView>
   );
 }
@@ -160,9 +182,9 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#ccc",
     marginRight: 10,
   },
+
   postUsername: {
     fontWeight: "600",
   },
@@ -175,9 +197,11 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 
-  imagePlaceholder: {
+  // post image style (imagePlaceholder yerine)
+  postImage: {
     width: "100%",
     height: 380,
+    resizeMode: "cover",
     backgroundColor: "#e0e0e0",
   },
 
@@ -213,15 +237,14 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: "#ccc",
   },
   likeAvatarOverlap: {
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: "#bbb",
     marginLeft: -6,
   },
+
   likesText: {
     fontSize: 13,
   },
@@ -265,8 +288,7 @@ const styles = StyleSheet.create({
   navIcon: {
     fontSize: 22,
   },
-  
- 
+
   alertBtn: {
     height: 50,
     marginHorizontal: 12,
@@ -281,5 +303,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
   },
-
 });
