@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
@@ -100,7 +100,11 @@ export default function HomeScreen() {
       </View>
       
       {/* Alert Button */}
-      <Pressable style={styles.alertBtn} onPress={showAlert}>
+   {/* Alert Button */}
+      <Pressable style={styles.alertBtn} onPress={() => Platform.OS === "web"
+      ? window.alert("Alert Button pressed")
+      : Alert.alert("Alert", "Alert Button pressed")
+  }>
         <Text style={styles.alertBtnText}>Alert</Text>
       </Pressable>
 
