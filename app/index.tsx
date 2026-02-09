@@ -99,7 +99,7 @@ export default function HomeScreen() {
         <Text style={styles.navIcon}>●</Text>
       </View>
       
-      {/* Alert Button */}
+  
    {/* Alert Button */}
       <Pressable style={styles.alertBtn} onPress={() => Platform.OS === "web"
       ? window.alert("Alert Button pressed")
