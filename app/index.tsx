@@ -1,52 +1,66 @@
+import BottomNav from "@/components/BottomNav";
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
   Alert,
+  Image,
   Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
-  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      {/* Top bar with back arrow and title */}
+      {/* Top bar */}
       <View style={styles.topBar}>
-        <Text style={styles.backIcon}>‹</Text>
+        <Pressable style={styles.topIcon} onPress={() => {}}>
+          <Ionicons name="add" size={26} color="#111" />
+        </Pressable>
 
-        <View style={styles.titleWrapper}>
-          <Text style={styles.headerUsername}>OOTD_EVERYDAY</Text>
-          <Text style={styles.headerTitle}>Posts</Text>
-        </View>
+        <Text style={styles.logo}>Instagram</Text>
 
-        {/* Spacer to keep title centered */}
-        <View style={{ width: 24 }} />
+        <Pressable style={styles.topIcon} onPress={() => {}}>
+          <Ionicons name="heart-outline" size={26} color="#111" />
+        </Pressable>
       </View>
 
-      {/* Main scroll content */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
+        {/* Stories */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.storiesRow}
+        >
+          <Story
+            label="Your story"
+            img={require("../assets/images/profile.png")}
+            showPlus
+          />
+          <Story label="randhawa_22" img={require("../assets/images/like1.jpg")} />
+          <Story label="isa.sait.calgary" img={require("../assets/images/like2.jpg")} />
+          <Story label="kirpal_sanghe" img={require("../assets/images/like3.jpg")} />
+        </ScrollView>
+
         {/* Post header */}
         <View style={styles.postHeader}>
           <View style={styles.postLeft}>
-            {/* Profile image */}
             <Image
               source={require("../assets/images/profile.png")}
               style={styles.avatar}
             />
-
             <View>
               <Text style={styles.postUsername}>ootd_everyday</Text>
               <Text style={styles.location}>via frenchie_fry39</Text>
             </View>
           </View>
-
           <Text style={styles.postMenu}>•••</Text>
         </View>
 
@@ -59,12 +73,12 @@ export default function HomeScreen() {
         {/* Actions row */}
         <View style={styles.actionsRow}>
           <View style={styles.actionsLeft}>
-            <Text style={styles.actionIcon}>♡</Text>
-            <Text style={styles.actionIcon}>🗨</Text>
-            <Text style={styles.actionIcon}>➢</Text>
+            <Ionicons name="heart-outline" size={26} color="#111" />
+            <Ionicons name="chatbubble-outline" size={24} color="#111" />
+            <Ionicons name="paper-plane-outline" size={24} color="#111" />
           </View>
 
-          <Text style={styles.bookmarkIcon}>🔖</Text>
+          <Ionicons name="bookmark-outline" size={24} color="#111" />
         </View>
 
         {/* Likes */}
@@ -96,7 +110,6 @@ export default function HomeScreen() {
           day! ✨
         </Text>
 
-        {/* Comments */}
         <Text style={styles.comments}>View all 12 comments</Text>
 
         <Text style={styles.comment}>
@@ -108,41 +121,56 @@ export default function HomeScreen() {
         </Text>
 
         <Text style={styles.time}>1 day ago</Text>
+
+        {/* Alert Button */}
+        <Pressable
+          style={styles.alertBtn}
+          onPress={() =>
+            Platform.OS === "web"
+              ? window.alert("Alert Button pressed")
+              : Alert.alert("Alert", "Alert Button pressed")
+          }
+        >
+          <Text style={styles.alertBtnText}>Alert</Text>
+        </Pressable>
+
+        {/* Spacer so content doesn't hide behind nav */}
+        <View style={{ height: 16 }} />
       </ScrollView>
 
-      {/* Bottom navigation */}
-      <View style={styles.bottomNav}>
-        <Text style={styles.navIcon}>⌂</Text>
-        <Text style={styles.navIcon}>⌕</Text>
-        <Text style={styles.navIcon}>＋</Text>
-        <Text style={styles.navIcon}>▶</Text>
-        <Text style={styles.navIcon}>●</Text>
-      </View>
-
-      {/* Alert Button */}
-      <Pressable
-        style={styles.alertBtn}
-        onPress={() =>
-          Platform.OS === "web"
-            ? window.alert("Alert Button pressed")
-            : Alert.alert("Alert", "Alert Button pressed")
-        }
-      >
-        <Text style={styles.alertBtnText}>Alert</Text>
-      </Pressable>
+      <BottomNav />
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
+function Story({
+  label,
+  img,
+  showPlus,
+}: {
+  label: string;
+  img: any;
+  showPlus?: boolean;
+}) {
+  return (
+    <View style={styles.story}>
+      <View style={styles.storyRing}>
+        <Image source={img} style={styles.storyImg} />
+        {showPlus ? (
+          <View style={styles.storyPlus}>
+            <Ionicons name="add" size={14} color="#fff" />
+          </View>
+        ) : null}
+      </View>
+      <Text style={styles.storyLabel} numberOfLines={1}>
+        {label}
+      </Text>
+    </View>
+  );
+}
 
-  scrollContent: {
-    paddingBottom: 20,
-  },
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#fff" },
 
   topBar: {
     height: 56,
@@ -153,19 +181,40 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#e5e5e5",
   },
-  backIcon: {
-    fontSize: 28,
+  topIcon: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
+  logo: { fontSize: 26, fontWeight: "700" },
+
+  scrollContent: { paddingBottom: 0 },
+
+  storiesRow: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    gap: 12,
   },
-  titleWrapper: {
+  story: { width: 82, alignItems: "center" },
+  storyRing: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    borderWidth: 3,
+    borderColor: "#d62976",
     alignItems: "center",
+    justifyContent: "center",
   },
-  headerUsername: {
-    fontSize: 12,
-    color: "#777",
-  },
-  headerTitle: {
-    fontSize: 16,
-    fontWeight: "600",
+  storyImg: { width: 56, height: 56, borderRadius: 28 },
+  storyLabel: { marginTop: 6, fontSize: 12, maxWidth: 78 },
+  storyPlus: {
+    position: "absolute",
+    right: -2,
+    bottom: -2,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#111",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "#fff",
   },
 
   postHeader: {
@@ -174,30 +223,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 12,
   },
-  postLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
+  postLeft: { flexDirection: "row", alignItems: "center" },
+  avatar: { width: 40, height: 40, borderRadius: 20, marginRight: 10 },
+  postUsername: { fontWeight: "600" },
+  location: { fontSize: 12, color: "#666" },
+  postMenu: { fontSize: 20, letterSpacing: 2 },
 
-  postUsername: {
-    fontWeight: "600",
-  },
-  location: {
-    fontSize: 12,
-    color: "#666",
-  },
-  postMenu: {
-    fontSize: 20,
-    letterSpacing: 2,
-  },
-
-  // post image style (imagePlaceholder yerine)
   postImage: {
     width: "100%",
     height: 380,
@@ -212,16 +243,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
-  actionsLeft: {
-    flexDirection: "row",
-  },
-  actionIcon: {
-    fontSize: 22,
-    marginRight: 14,
-  },
-  bookmarkIcon: {
-    fontSize: 20,
-  },
+  actionsLeft: { flexDirection: "row", gap: 14 },
 
   likesRow: {
     flexDirection: "row",
@@ -229,42 +251,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginBottom: 4,
   },
-  likesAvatars: {
-    flexDirection: "row",
-    marginRight: 8,
-  },
-  likeAvatar: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-  },
+  likesAvatars: { flexDirection: "row", marginRight: 8 },
+  likeAvatar: { width: 20, height: 20, borderRadius: 10 },
   likeAvatarOverlap: {
     width: 20,
     height: 20,
     borderRadius: 10,
     marginLeft: -6,
   },
+  likesText: { fontSize: 13 },
 
-  likesText: {
-    fontSize: 13,
-  },
-
-  caption: {
-    paddingHorizontal: 12,
-    marginTop: 4,
-    fontSize: 13,
-  },
-  comments: {
-    paddingHorizontal: 12,
-    marginTop: 4,
-    color: "#777",
-    fontSize: 13,
-  },
-  comment: {
-    paddingHorizontal: 12,
-    marginTop: 2,
-    fontSize: 13,
-  },
+  caption: { paddingHorizontal: 12, marginTop: 4, fontSize: 13 },
+  comments: { paddingHorizontal: 12, marginTop: 4, color: "#777", fontSize: 13 },
+  comment: { paddingHorizontal: 12, marginTop: 2, fontSize: 13 },
   time: {
     paddingHorizontal: 12,
     marginTop: 6,
@@ -272,22 +271,7 @@ const styles = StyleSheet.create({
     color: "#999",
     marginBottom: 10,
   },
-  bold: {
-    fontWeight: "600",
-  },
-
-  bottomNav: {
-    height: 58,
-    borderTopWidth: 1,
-    borderTopColor: "#e5e5e5",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    backgroundColor: "#fff",
-  },
-  navIcon: {
-    fontSize: 22,
-  },
+  bold: { fontWeight: "600" },
 
   alertBtn: {
     height: 50,
@@ -298,9 +282,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  alertBtnText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-  },
+  alertBtnText: { color: "#fff", fontSize: 16, fontWeight: "700" },
 });
